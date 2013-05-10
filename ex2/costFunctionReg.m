@@ -17,6 +17,8 @@ grad = zeros(size(theta));
 %               Compute the partial derivatives and set grad to the partial
 %               derivatives of the cost w.r.t. each parameter in theta
 
+% Create new array thetaAlt as for regression we aren't interested in theta0
+
 thetaAlt = [0; theta(2:end)];
 
 h = sigmoid(X * theta);
