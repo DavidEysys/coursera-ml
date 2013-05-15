@@ -21,11 +21,36 @@ p = zeros(size(X, 1), 1);
 %       can use max(A, [], 2) to obtain the max for each row.
 %
 
+%Theta1 (25x401), Theta2 (10x26), X (5000x400), p (5000x1)
+
+%Layer 1 (Input)
+
+a1 = [ones(m, 1), X]; % add 1 for the bias (ones(m, 1) gives us a column vector of ones)
+% a1 (5000x401)
 
 
+% a2 = g(z^(2)), z^(2) = Theta^(1) * a1
+% a1 is (5000x401) and Theta1 is (25x401) ==> Theta1 * a1' (25x5000)
 
+z2 = Theta1 * a1';	% z2 (25x5000)
 
+%Layer 2 (Hidden layer)
 
+a2 = sigmoid(z2); % a2 (25, 5000)
+
+% Have to add bias (want a (26x5000), so opposite of before)
+
+a2 = [ones(1, size(a2, 2)); a2];	% a2 (26x5000)
+
+% Layer 3 (Output)
+
+% Theta2 (10x26), a2 (26x5000) ==> Theta2 * a2 (10x5000)
+
+z3 = Theta2 * a2;	% z3 (10x5000)
+
+a3 = sigmoid(z3);	% a3 (10x5000), This is our hypothesis h
+
+[x, p] = max(a3', [], 2);	% Transpose a3 so p is a 5000x1 vector
 
 
 

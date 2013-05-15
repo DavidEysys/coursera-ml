@@ -30,9 +30,28 @@ X = [ones(m, 1) X];
 %       for each row.
 %       
 
+%For each input, you should compute the
+%“probability” that it belongs to each class using the trained logistic regression
+%classifiers. Your one-vs-all prediction function will pick the class for which the
+%corresponding logistic regression classifier outputs the highest probability and
+%return the class label (1, 2,..., or K) as the prediction for the input example.
+
+% help max:
+
+%For a vector argument, return the maximum value. For a matrix argument, return the maximum value from each column, as a row vector, or over the dimension %dim if defined, in which case y should be set to the empty matrix (it's ignored otherwise)
+
+%If called with one input and two output arguments, `max' also
+%     returns the first index of the maximum value(s).  Thus,
+%
+%          [x, ix] = max ([1, 3, 5, 2, 5])
+%             =>  x = 5
+%                 ix = 3
 
 
 
+A = sigmoid(X * all_theta');
+
+[x, p] = max(A, [], 2);
 
 
 
