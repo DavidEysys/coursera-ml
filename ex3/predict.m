@@ -50,6 +50,8 @@ z3 = Theta2 * a2;	% z3 (10x5000)
 
 a3 = sigmoid(z3);	% a3 (10x5000), This is our hypothesis h
 
+% Note, h should have dimensions (m, num_labels) and we have one hypothesis per training example such that the vector h(i,:) classifies our example
+
 [x, p] = max(a3', [], 2);	% Transpose a3 so p is a 5000x1 vector
 
 
