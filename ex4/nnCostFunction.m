@@ -38,6 +38,39 @@ Theta2_grad = zeros(size(Theta2));
 %         variable J. After implementing Part 1, you can verify that your
 %         cost function computation is correct by verifying the cost
 %         computed in ex4.m
+
+%whos();
+
+%y = 5000x1, X = 5000x400, Theta1 = 25x401, Theta2 = 10x26
+
+% See ex3/predict.m for step-by-step of the below
+a1 = [ones(m, 1), X]; 			% 5000x401
+z2 = Theta1 * a1';    			% z2 (25x5000)
+a2 = sigmoid(z2);     			% a2 (25, 5000)
+a2 = [ones(1, size(a2, 2)); a2];	% a2 (26x5000)
+z3 = Theta2 * a2;			% z3 (10x5000)
+h = sigmoid(z3);			% h (10x5000)
+
+% We aren't including the bias in our theta summation
+Theta1_nobias = Theta1(:,2:end);
+Theta2_nobias = Theta2(:,2:end);
+
+%Generate labels as explained in one Vs all lectures
+Y = eye(num_labels)(y,:);
+
+% Reg term : sum over L (sum over s_l (sum over s_l+1) )
+reg_term = sumsq(Theta1_nobias(:)) + sumsq(Theta2_nobias(:));
+reg_term = reg_term * (lambda / (2*m));
+
+% log(h) 10x5000, Y = 5000x10
+
+cost_first_loop = (-Y .* log(h)') - ((1 - Y) .* log(1 - h)');
+
+% Sum over all these elements and add the regression term
+
+J = (1/m) * sum(cost_first_loop(:)) + reg_term;
+
+
 %
 % Part 2: Implement the backpropagation algorithm to compute the gradients
 %         Theta1_grad and Theta2_grad. You should return the partial derivatives of
@@ -53,6 +86,14 @@ Theta2_grad = zeros(size(Theta2));
 %         Hint: We recommend implementing backpropagation using a for-loop
 %               over the training examples if you are implementing it for the 
 %               first time.
+
+
+for 1 = 1:m,
+
+	
+end
+
+
 %
 % Part 3: Implement regularization with the cost function and gradients.
 %
