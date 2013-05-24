@@ -88,10 +88,39 @@ J = (1/m) * sum(cost_first_loop(:)) + reg_term;
 %               first time.
 
 
-for 1 = 1:m,
+Delta1 = 0;
+Delta2 = 0;
+for i = 1:m
+	% step 1
+	a1 = [1; X(i,:)'];
+	z2 = Theta1 * a1;
+	a2 = [1; sigmoid(z2)];
+	z3 = Theta2 * a2;
+	a3 = sigmoid(z3);
 
-	
-end
+	% step 2
+	yi = Y(i,:)';
+
+	delta3 = a3 - yi;
+
+	% step 3
+	delta2 = (Theta2_nobias' * delta3) .* sigmoidGradient(z2);
+	%d2 = d2(2:end);
+
+
+	% step 4
+	Delta2 = Delta2 + (delta3 * a2');
+	Delta1 = Delta1 + (delta2 * a1');
+%endfor
+
+%whos();
+
+%Fill in dimensions
+
+% step 5
+
+Theta1_grad = (1/m) * Delta1;
+Theta2_grad = (1/m) * Delta2;
 
 
 %
@@ -105,19 +134,8 @@ end
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
+Theta1_grad(:,2:end) = Theta1_grad(:,2:end) + ((lambda / m) * Theta1_nobias);
+Theta2_grad(:,2:end) = Theta2_grad(:,2:end) + ((lambda / m) * Theta2_nobias);
 
 
 
